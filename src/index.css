@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .scale-102 {
+    transform: scale(1.02);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+
+  /* ElevenLabs Voice Bot Styling */
+  elevenlabs-convai {
+    --convai-primary-color: theme('colors.pink.600');
+    --convai-secondary-color: theme('colors.purple.600');
+    --convai-background-color: rgb(255, 255, 255);
+    --convai-border-radius: 1rem;
+    --convai-error-color: theme('colors.orange.500');
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 50;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease-out;
+  }
+
+  elevenlabs-convai:not(:defined) {
+    opacity: 0;
+  }
+}
