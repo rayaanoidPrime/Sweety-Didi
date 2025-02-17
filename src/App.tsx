@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Language } from './types';
 import { features } from './data/features';
 import LanguageSelector from './components/LanguageSelector';
@@ -16,7 +16,10 @@ function App() {
   const [language, setLanguage] = useState<Language>('hindi');
   const [convaiError, setConvaiError] = useState(false);
   const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
-  const [playBeep] = useSound('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3', { volume: 0.5 });
+  const [playBeep] = useSound(
+    'https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3',
+    { volume: 0.5 },
+  );
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -31,9 +34,15 @@ function App() {
 
   const handleFeatureClick = (featureId: string) => {
     if (featureId === 'beauty') {
-      window.open('https://www.youtube.com/watch?v=playlist?list=beauty-tips-india', '_blank');
+      window.open(
+        'https://www.youtube.com/watch?v=playlist?list=beauty-tips-india',
+        '_blank',
+      );
     } else if (featureId === 'affirmations') {
-      window.open('https://open.spotify.com/playlist/daily-affirmations-hindi', '_blank');
+      window.open(
+        'https://open.spotify.com/playlist/daily-affirmations-hindi',
+        '_blank',
+      );
     } else if (featureId === 'games') {
       window.open('https://www.mindgames.com/hi/brain-training', '_blank');
     } else {
@@ -54,9 +63,11 @@ function App() {
           <div className="flex items-center gap-3">
             <button className="flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 border border-pink-100 hover:border-purple-200 transition-all">
               <UserCircle2 className="w-4 h-4 text-pink-600" />
-              <span className="text-sm font-medium text-gray-700">My Nickname</span>
+              <span className="text-sm font-medium text-gray-700">
+                My Nickname
+              </span>
             </button>
-            <button 
+            <button
               onClick={handleSosCall}
               className="flex items-center gap-2 bg-red-500 text-white rounded-full px-3 py-1.5 border border-red-400 hover:bg-red-600 transition-all animate-pulse"
             >
@@ -69,7 +80,7 @@ function App() {
             onLanguageChange={setLanguage}
           />
         </div>
-        
+
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-16 mt-16">
           {/* Hero Section */}
           <div className="text-center mb-12">
@@ -102,7 +113,7 @@ function App() {
           {/* Features Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {features
-              .filter(feature => !['community', 'help'].includes(feature.id))
+              .filter((feature) => !['community', 'help'].includes(feature.id))
               .map((feature) => (
                 <FeatureCard
                   key={feature.id}
@@ -120,7 +131,7 @@ function App() {
 
           {selectedFeature && (
             <FeatureDetails
-              feature={features.find(f => f.id === selectedFeature)!}
+              feature={features.find((f) => f.id === selectedFeature)!}
               language={language}
               onClose={() => setSelectedFeature(null)}
             />
@@ -131,11 +142,16 @@ function App() {
               <div className="flex items-start gap-3">
                 <AlertCircle className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-sm font-medium text-gray-800 mb-1">Voice Assistant Unavailable</h4>
+                  <h4 className="text-sm font-medium text-gray-800 mb-1">
+                    Voice Assistant Unavailable
+                  </h4>
                   <p className="text-xs text-gray-600">
-                    {language === 'hindi' && 'वॉइस सहायक अभी उपलब्ध नहीं है। कृपया थोड़ी देर बाद पुनः प्रयास करें।'}
-                    {language === 'hinglish' && 'Voice assistant abhi available nahi hai. Please thodi der baad try karein.'}
-                    {language === 'telugu' && 'వాయిస్ అసిస్టెంట్ ప్రస్తుతం అందుబాటులో లేదు. దయచేసి కొంత సేపు తర్వాత మళ్లీ ప్రయత్నించండి.'}
+                    {language === 'hindi' &&
+                      'वॉइस सहायक अभी उपलब्ध नहीं है। कृपया थोड़ी देर बाद पुनः प्रयास करें।'}
+                    {language === 'hinglish' &&
+                      'Voice assistant abhi available nahi hai. Please thodi der baad try karein.'}
+                    {language === 'telugu' &&
+                      'వాయిస్ అసిస్టెంట్ ప్రస్తుతం అందుబాటులో లేదు. దయచేసి కొంత సేపు తర్వాత మళ్లీ ప్రయత్నించండి.'}
                   </p>
                 </div>
               </div>
