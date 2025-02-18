@@ -4,7 +4,7 @@ import morgan from "morgan";
 import cors from "cors";
 import { config } from "./config";
 import { v1Router } from "./routes/v1";
-// import { errorHandler } from "@/middleware/errorHandler";
+import { errorHandler } from "./middleware/errorHandler";
 // import { limiter } from "@/middleware/rateLimiter";
 import { logger } from "./utils/logger";
 
@@ -26,7 +26,7 @@ app.use(morgan("dev"));
 app.use("/api/v1", v1Router);
 
 // Error handling
-// app.use(errorHandler);
+app.use(errorHandler);
 
 // Start server
 app.listen(config.port, () => {
