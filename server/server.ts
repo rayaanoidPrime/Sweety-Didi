@@ -1,24 +1,48 @@
 import express from "express";
+import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors";
-import { apiRouter } from "./api";
 import { config } from "./config";
-import { errorHandler } from "./api/middleware/errorHandler";
+import { v1Router } from "./routes/v1";
+// import { errorHandler } from "@/middleware/errorHandler";
+// import { limiter } from "@/middleware/rateLimiter";
+import { logger } from "./utils/logger";
 
-const { port, nodeEnv } = config;
 const app = express();
 
-// Middleware
-app.use(morgan("dev"));
+// Security middleware
+app.use(helmet());
 app.use(cors());
+// app.use(limiter);
+
+// Request parsing
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Routes
-app.use("/api", apiRouter);
+// Logging
+app.use(morgan("dev"));
 
-// Error handling middleware
-app.use(errorHandler);
+// API routes
+app.use("/api/v1", v1Router);
 
-app.listen(port, () => {
-  console.log(`Server running in ${nodeEnv} mode on port ${port}`);
+// Error handling
+// app.use(errorHandler);
+
+// Start server
+app.listen(config.port, () => {
+  logger.info(
+    `Server running in ${config.nodeEnv} mode on port ${config.port} - ${config.host}`
+  );
+});
+
+// Handle uncaught exceptions
+process.on("uncaughtException", (error) => {
+  logger.error("Uncaught Exception:", error);
+  process.exit(1);
+});
+
+// Handle unhandled promise rejections
+process.on("unhandledRejection", (error) => {
+  logger.error("Unhandled Rejection:", error);
+  process.exit(1);
 });
